@@ -29,6 +29,7 @@ import org.objectweb.asm.Type;
 public class ModFileScanData
 {
     private final Set<AnnotationData> annotations = new LinkedHashSet<>();
+    private final Set<GenericFieldData> genericFields = new LinkedHashSet<>();
     private final Set<ClassData> classes = new LinkedHashSet<>();
     private final Map<String,IModLanguageProvider.IModLanguageLoader> modTargets = new HashMap<>();
     private Map<String,?> functionalScanners;
@@ -44,6 +45,11 @@ public class ModFileScanData
 
     public Set<AnnotationData> getAnnotations() {
         return annotations;
+    }
+
+    public Set<GenericFieldData> getGenericFields()
+    {
+        return genericFields;
     }
 
     public void addLanguageLoader(final Map<String,? extends IModLanguageProvider.IModLanguageLoader> modTargetMap)
@@ -67,4 +73,6 @@ public class ModFileScanData
     public record ClassData(Type clazz, Type parent, Set<Type> interfaces) {}
 
     public record AnnotationData(Type annotationType, ElementType targetType, Type clazz, String memberName, Map<String, Object> annotationData) {}
+
+    public record GenericFieldData(Type clazz, String fieldName, Type fieldType, String fieldSignature) {}
 }
